@@ -1,13 +1,16 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdio.h>
+#include <stdlib.h>
+
 
 #define BUFSIZE 1024
+
 
 int main(int argc, char* argv[]){
     char buffer[BUFSIZE];
     int n;
-    int fdi = open(argv[1], O_RDONLY);
+    int fdi = open(argv[1], O_RDONLY, 0666);
     if(fdi == -1){ //erro ao abrir o ficheiro de entrada
         perror(argv[1]);
         return 1;

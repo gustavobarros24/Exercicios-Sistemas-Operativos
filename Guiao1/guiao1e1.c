@@ -5,8 +5,8 @@
 int mycat(){
     int n;
     char buf[1024];
-    while((n = read(0, buf, sizeof(buf))) > 0){
-        write(1, buf, n);
+    while((n = read(STDIN_FILENO, buf, sizeof(buf))) > 0){
+        write(STDOUT_FILENO, buf, n);
     }
     return 0;
 }

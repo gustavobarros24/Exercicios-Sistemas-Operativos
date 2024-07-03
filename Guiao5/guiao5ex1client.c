@@ -8,17 +8,17 @@
 #include <sys/wait.h>
 
 
-int main(){
+int main(int argc, const char *argv[]){
     int fd = open("fifo", O_WRONLY, 0666);
     if(fd == -1){
-        perror("Não ligou ao fifo");
+        perror("fd");
         return -1;
     }
 
-    char buffer[1024];
+    char buff[1024];
     int readbytes = 0;
-    while((readbytes = read(0, &buffer, sizeof(buffer)))>0){
-        write(fd, &buffer, sizeof(buffer));
+    while((readbytes = read(STDIN_FILENO, &buff, sizeof(buff)))>0){
+        write(fd, &buff, sizeof(buff));
     }
     close(fd);
     return 0;

@@ -8,10 +8,10 @@
 #include <sys/wait.h>
 
 
-int main(){
+int main(int argc, const char *argv[]){
     int pipe = mkfifo("fifo", 0666);
-    if(pipe==-1){
-        perror("fifo não aberto");
+    if(pipe == -1){
+        perror("pipe");
         return -1;
     }
     return 0;

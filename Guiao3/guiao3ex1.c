@@ -7,9 +7,9 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 
-//gcc -Wall guiao3ex1.c -o guiao3ex1
-int main(int argc, char* argv[]){
+
+int main(int argc, const char *argv[]){
     execlp("ls", "ls", "-l", NULL);
-    perror("Erro ao executar o comando ls.");
-    return 1;
+    perror("execlp");
+    return -1;
 }

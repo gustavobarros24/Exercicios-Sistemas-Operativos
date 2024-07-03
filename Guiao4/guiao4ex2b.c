@@ -9,7 +9,8 @@
 
 
 int main(int argc, const char *argv[]){
-    int pd[2], m = 8;
+    int pd[2];
+    int n[5] = {1, 2, 3, 4, 5};
     pipe(pd);
     pid_t pid = fork();
     if(pid == -1){
@@ -17,20 +18,23 @@ int main(int argc, const char *argv[]){
         _exit(-1);
     }
     if(pid == 0){
-        close(pd[1]);
-        int v;
-        printf("Leitura do pipe vai ser iniciada\n");
-        read(pd[0], &v, sizeof(v));
         close(pd[0]);
-        printf("Filho recebeu: %d\n", v);
+
+        for(int i = 0; i < 5; i++){
+            write(pd[1], &n[i], sizeof(int));
+            sleep(2);
+        }
+        close(pd[1]);
         _exit(0);
     }
     else{
-        close(pd[0]);
-        sleep(8);
-        write(pd[1], &m, sizeof(m));
-        printf("Pai enviou: %d\n",m);
         close(pd[1]);
+        int recebido;
+        int bytesread = 0;
+        while((bytesread = read(pd[0], &recebido, sizeof(int)))>0){
+            printf("Sou o pai e recebi: %d\n", recebido);
+        }
+        close(pd[0]);
     }
     return 0;
 }

@@ -11,20 +11,31 @@
 int main(int argc, char *argv[]){
     int pd[2];
     pipe(pd);
-    if(fork() == 0){
-        dup2(pd[1], 1);
+
+    pid_t pid = fork();
+    if(pid == -1){
+        perror("pid");
+        _exit(-1);
+    }
+    if(pid == 0){
         close(pd[0]);
+        dup2(pd[1], STDOUT_FILENO);
         close(pd[1]);
-        execlp("ls", "ls", "/etc", NULL);
-        perror("ls");
-        return 1;
+        execlp("ls","ls","/etc",NULL);
+        perror("execlp");
+        _exit(-1);
     }
     else{
-        dup2(pd[0], 0);
-        close(pd[0]);
-        close(pd[1]);
-        execlp("wc", "wc", "-l", NULL);
-        perror("wc");
-        return 1;
+        int status;
+        wait(&status);
+        if(WIFEXITED(status)){
+            close(pd[1]);
+            dup2(pd[0],STDIN_FILENO);
+            close(pd[0]);
+            execlp("wc", "wc", "-l", NULL);
+            perror("execlp");
+            return -1;
+        }
     }
+    return 0;
 }

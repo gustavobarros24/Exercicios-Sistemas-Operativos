@@ -8,19 +8,21 @@
 #include <sys/wait.h>
 
 
-int main(int argc, char* argv[]){
+int main(int argc, char *argv[]){
     pid_t pid = fork();
 
-    if (pid == 0){
+    if(pid == -1){
+        perror("pid");
+        _exit(-1);
+    }
+    if(pid == 0){
         execlp("ls", "ls", "-l", NULL);
-        perror("Erro ao executar o comando ls.");
-        _exit(1);
+        perror("execlp");
+        _exit(-1);
     }
     else{
         int status;
         wait(&status);
-        printf("Terminou: %d\n", WEXITSTATUS(status));
+        printf("Terminou processo %d: %d\n", pid, WEXITSTATUS(status));
     }
-
-    return 0;
 }

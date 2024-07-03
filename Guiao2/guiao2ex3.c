@@ -1,22 +1,26 @@
 #include <unistd.h>
-#include <sys/wait.h>
+#include <fcntl.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <sys/wait.h>
 
-int main(){
-    int i, status;
+
+int main(int argc, const char *argv[]){
+    int status;
     pid_t pid;
-    for(i=0; i!=10; i++){
-        if(fork()==0){//filho
-            printf("filho %d: pid = %d, ppid %d\n", i+1, getpid(), getppid());
-            return i+1;
+    for(int i = 0; i < 10; i++){
+        if(fork() == 0){
+            printf("Pid do filho(no processo filho): %d\nPid do pai(no processo filho): %d\n", getpid(), getppid());
+            _exit(0);
         }
-        //pai
-        pid = wait(&status);
-        if(WIFEXITED(status)){
-            printf("pai %d: filho %d, %d\n",getpid(), pid, WEXITSTATUS(status));
-        }
-        else {
-            printf("pai %d: filho morreu sem status no wifexited(status)");
+        else{
+            pid = wait(&status);
+            if(WIFEXITED(status)){
+                printf("Pid do pai(no processo pai): %d\nPid do filho(no processo pai): %d\nPid do pai do pai: %d\n", getpid(), pid, getppid());
+            }
+            else{
+                printf("Filho morreu sem status.\n");
+            }
         }
     }
     return 0;

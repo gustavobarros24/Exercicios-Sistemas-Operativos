@@ -6,6 +6,7 @@
 
 
 int main(int argc, const char *argv[]){
-    printf("Pid do processo: %d\nPid do pai: %d\n", getpid(), getppid());
+    unlink("fifoin");
+    unlink("fifoout");
     return 0;
 }

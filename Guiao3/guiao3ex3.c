@@ -7,13 +7,17 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 
-int sistema(const char* comando){
-    pid_t pid;
-    int status;
-    if((pid = fork()) == 0){
-        char** args = NULL, *ptr = strdup(comando) , *token = NULL;
+
+int sistema(const char *comando){
+    pid_t pid = fork();
+    if(pid == -1){
+        perror("pid");
+        _exit(-1);
+    }
+    if(pid == 0){
+        char** args = NULL, *aux = strdup(comando), *token = NULL;
         int i = 0;
-        while((token = strsep(&ptr, " ")) != NULL){
+        while((token = strsep(&aux, " ")) != NULL){
             args = realloc(args, sizeof(char*) * (i+1));
             args[i] = strdup(token);
             i++;
@@ -21,14 +25,18 @@ int sistema(const char* comando){
         args = realloc(args, sizeof(char*) * (i+1));
         args[i] = NULL;
         execvp(args[0], args);
-        perror(args[0]);
-        _exit(1);
+        perror("execvp");
+        _exit(-1);
     }
-    waitpid(pid, &status, 0);
-    return WIFEXITED(status) ? WEXITSTATUS(status): 1;
+    else{
+        int status;
+        waitpid(pid, &status, 0);
+        return WIFEXITED(status) ? WIFEXITED(status): -1;
+    }
 }
 
-int main(int argc, char* argv[]){
+
+int main(int argc, char *argv[]){
     sistema("ls");
     return 0;
 }

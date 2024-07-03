@@ -18,9 +18,11 @@ int main(int argc, char* argv[]) {
         if((pids[i] = fork()) == 0){
             execlp(argv[i+1], argv[i+1], NULL);
             perror(argv[i+1]);
-            _exit(1);
+            _exit(-1);
         }
-        nexecs[i] = 1;
+        else{
+            nexecs[i] = 1;
+        }
     }
     while(pexec > 0){
         pid = wait(&status);
@@ -34,7 +36,9 @@ int main(int argc, char* argv[]) {
                 execlp(argv[i+1], argv[i+1], NULL);
                 perror(argv[i+1]);
             }
-            nexecs[i]++;
+            else{
+                nexecs[i]++;
+            }
         }
     }
     for(i = 0; i < argc-1; i++){

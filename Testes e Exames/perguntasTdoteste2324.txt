@@ -1,0 +1,21 @@
+I
+
+
+1) No trabalho prático usamos 2 escalonamentos, o FCFS(First Come First Served) e o SJF(Small Job First). Sendo assim, consoante o que testamos, o SJF foi o que obteve, melhor
+performance, como faz os jobs pequenos primeiros, consegue fazer maior quantidade de jobs por unidade de tempo, assim os processos obtiam também menor tempo de execução. Um
+problema do algoritmo é um job maior, que necessite de mais tempo, fique a envelhecer na queue de jobs, pois vão aparecendo jobs mais pequenos, que são colocados na sua frente na
+queue.
+
+2)a) O swapping de páginas entre memórias e o disco permite que o programa tenha em memória, páginas do mesmo que são mais necessárias, com swap conseguimos remover da memória páginas
+que são menos utilizadas substituindo-as por páginas mais usadas, o que permite um uso mais eficiente da memória. Uma das preocupações é escolher um bom algoritmo de swap de páginas
+para que se garanta que as páginas mais usadas não são substituídas.
+
+  b) A contiguidade dos blocos pode ser assegurada em ambos (se o ficheiro foi criado pouco depois do sistema de ficheiros ser criado, onde ainda há blocos contíguos). O sistema de
+ficheiros tem a vantagem de ter um tamanho variável. Contudo acho que o melhor seria optar pela partição do disco pois permite implementar algoritmos mais eficientes (por exemplo: 
+fetch de várias páginas contíguas em disco). Por fim o ideal seria ter mais memória e em segundo caso, mais discos.
+
+
+II
+
+
+2)b) Ocorre um deadlock. Abrir o FIFO para leitura bloqueia. O cliente fica à espera do servidor, mas o servidor está à espera do cliente (à espera de uma mensagem em "fifo_server").

@@ -1,0 +1,13 @@
+1)a) O serviço permite alternar entre diferentes processos de forma rápida. Isto é feito dividindo o tempo do CPU em fatias(pequenas) atribuindo uma a cada processo. Se um processo
+excede o tempo de CPU disponível, o sistema operativo interrompe o mesmo e salva o seu estado e contexto e inicia ou restaura o estado e contexto de outro processo.
+
+  b) Se o tempo for muito curto, existirão muitas comutações o que pode resultar em sobrecarga do sistema devido ao tempo perdido nas trocas por causa de serem demasiadas e reduz
+também o tempo de CPU usado pelas aplicações. Se o tempo for muito grande, um programa pode usar o CPU durante demasiado tempo provocando atrasos nos outros programas. Sendo assim
+tem de ser escolhido um intervalo adequado à escala do sistema.
+
+2)a) É mais apropriado usar blocos maiores de 4096 bytes. Quando ocorre um write, o sistema operativo geralmente agrupa os dados em blocos antes de os escrever no dispositivo de
+armazenamento. Escrever uma quantidade maior reduz as chamadas ao sistema e consequentemente as operações de gravação e sincronização do sistema de arquivos. Portanto escrever em
+tamanhos maiores melhora o desempenho da aplicação.
+
+  b) Para uma leitura de ficheiros, o padrão de acesso sequencial é preferível, pois permite a leitura contígua e utiliza a localidade espacial para otimizar a busca de dados
+adjacentes. Isso é mais eficiente do que a leitura aleatória, que pode levar a tempos de busca e acesso mais longos e, consequentemente a um desempenho inferior.
